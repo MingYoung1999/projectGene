@@ -1,47 +1,15 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        projectGene
-      </h1>
-      <h2 class="subtitle">
-        Welcome to the iView + Nuxt.js template
-      </h2>
-      <div class="links">
-        <Button type="primary" target="_blank" rel="noopener noreferrer" to="https://nuxtjs.org/">
-          Documentation
-        </Button>
-        <Button target="_blank" rel="noopener noreferrer" to="https://github.com/nuxt/nuxt.js">
-          GitHub
-        </Button>
-        <Button target="_blank" rel="noopener noreferrer" to="https://www.iviewui.com/">
-          iView
-        </Button>
-      </div>
-    </div>
-  </div>
+
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+
 export default {
-  components: {
-    Logo
-  }
+  layout: "main",
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .title {
   font-family:
     'Quicksand',
