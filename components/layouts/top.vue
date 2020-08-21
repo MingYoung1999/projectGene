@@ -2,7 +2,7 @@
     <div class="con">
         <div style="font-size: 18px;">
             <Breadcrumb style="margin:0 16px;line-height:64px;">
-                <BreadcrumbItem :to="'/'+this.$route.params.site+'/'" class="pointer">
+                <BreadcrumbItem to="/" class="pointer">
                     <Icon type="md-home" size="22" style="line-height:60px;padding-bottom:5px"/>
                 </BreadcrumbItem>
                 <BreadcrumbItem style="font-size:18px;">{{$route.name}}</BreadcrumbItem>
