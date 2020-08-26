@@ -68,7 +68,7 @@ export default {
 }
 .layout-header{
     margin: 0;
-    padding: 1% 3% 2% 4%;
+    padding: 0% 4% 2% 4%;
     background: #fff;
 }
 .layout-body{
