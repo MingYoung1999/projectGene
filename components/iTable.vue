@@ -431,7 +431,7 @@ export default {
   color: #fff;
 }
 .ivu-table {
-  font-size: 13px;
+  font-size: 15px;
 }
 .ivu-table-header {
   color: #555555;

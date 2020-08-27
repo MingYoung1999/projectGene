@@ -8,21 +8,29 @@
                 @click="onClickBack">返回</Button>
         </Row>
         <Tabs>
-            <TabPane label="詳細資料">詳細資料</TabPane>
-            <TabPane label="用藥紀錄">用藥紀錄</TabPane>
+            <TabPane label="詳細資料">
+                <gene :data="data"/>
+            </TabPane>
+            <TabPane label="用藥紀錄">
+                <record/>
+            </TabPane>
         </Tabs>
     </div>
 </template>
 
 <script>
+import gene from '@/components/main/gene'
+import record from '@/components/main/record'
 export default {
+    components: {
+        gene,
+        record,
+    },
     props: {
         data: {
             type: Object,
             required: true,
-            default: () => {
-                return {}
-            }
+            default: () => { return {} },
         },
     },
     methods: {
