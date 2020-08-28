@@ -1,8 +1,11 @@
 <template>
-
+    <div>
+        <ideo/>
+    </div>
 </template>
 
 <script>
+import ideo from '@/components/main/ideo'
 export default {
     prop:{
         data: {
@@ -11,6 +14,7 @@ export default {
             default: () => { return {} },
         },
     },
+    mounted() {}
 }
 </script>
 

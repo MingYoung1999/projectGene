@@ -36,7 +36,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '@/plugins/iview'
+    '@/plugins/iview',
+    { src: '~node_modules/d3/dist/d3.js', ssr: false},
   ],
   /*
   ** Auto import components
@@ -58,5 +59,12 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
-  }
+  },
+  head: {
+    script: [
+      {
+        src: 'https://cdn.jsdelivr.net/npm/ideogram@1.14.1/dist/js/ideogram.min.js'
+      }
+    ],
+  },
 }
