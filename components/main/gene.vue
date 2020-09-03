@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <ideo/>
-    </div>
+    <div id="ideo"></div>
 </template>
 
 <script>
-import ideo from '@/components/main/ideo'
+import * as d3 from 'd3';
 export default {
     prop:{
         data: {
@@ -14,7 +12,38 @@ export default {
             default: () => { return {} },
         },
     },
-    mounted() {}
+    mounted() {
+        d3.select('#ideo')
+            .append('svg')
+            .text(function(d){
+                // var list = [];
+                // list.push(
+                // {
+                //     chr: "11",
+                //     position: 118894558
+                // },
+                // {
+                //     chr:"19",
+                //     position:10005699
+                // },
+                // {
+                //     chr:"19",
+                //     position:52384651
+                // },)
+                var legend = [{
+                    name: 'Significance',
+                    rows: [
+                        {name: 'Mismatch', color: '#F00', shape: 'triangle'},
+                        {name: 'Match', color: '#8D4', shape: 'triangle'}
+                    ]
+                }];
+                var ideogram = new Ideogram({
+                organism: 'human',
+                // annotations: list,
+                legend:legend
+                })
+            });
+    }
 }
 </script>
 

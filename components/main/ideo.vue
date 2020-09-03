@@ -1,5 +1,5 @@
 <template>
-
+    <div id="ideo"></div>
 </template>
 
 <script>
@@ -7,8 +7,8 @@ import * as d3 from 'd3';
 // import Ideogram from 'ideogram';
 export default {
     mounted(){
-        d3.select('body').selectAll('div')
-            .append('div')
+        d3.select('#ideo')
+            .append('svg')
             .text(function(d){
                 // var list = [];
                 // list.push(

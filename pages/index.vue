@@ -6,6 +6,9 @@
 
 export default {
   layout: "main",
+  mounted(){
+    this.$router.push('/:site/main');
+  },
 }
 </script>
 
