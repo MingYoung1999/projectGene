@@ -43,13 +43,7 @@ export default {
             this.$emit('onClickBack');
         },
     },
-    watch:{
-        data(){
-            console.log(this.data);
-        }
-    },
     mounted(){
-        console.log(this.ID);
         axios
         .get('https://geneherokudb.herokuapp.com/patientAPI/detail/?patient_ID='+this.ID.toString())
         .then(response => (this.data = response.data))
