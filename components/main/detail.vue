@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import gene from '@/components/main/gene'
 import record from '@/components/main/record'
 export default {
@@ -27,16 +28,34 @@ export default {
         record,
     },
     props: {
-        data: {
-            type: Object,
+        ID: {
+            type: Number,
             required: true,
-            default: () => { return {} },
         },
+    },
+    data(){
+        return{
+            data: {},
+        }
     },
     methods: {
         onClickBack(){
             this.$emit('onClickBack');
         },
+    },
+    watch:{
+        data(){
+            console.log(this.data);
+        }
+    },
+    mounted(){
+        console.log(this.ID);
+        axios
+        .get('https://geneherokudb.herokuapp.com/patientAPI/detail/?patient_ID='+this.ID.toString())
+        .then(response => (this.data = response.data))
+        .catch(function (error) { // 请求失败处理
+            console.log(error);
+        });
     },
 }
 </script>

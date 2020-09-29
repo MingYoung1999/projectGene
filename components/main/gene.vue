@@ -13,7 +13,7 @@ export default {
         },
     },
     mounted() {
-        d3.select('#ideo')
+        d3.select('body')
             .append('svg')
             .text(function(d){
                 // var list = [];

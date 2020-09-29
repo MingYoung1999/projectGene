@@ -9,10 +9,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "d3": "^6.0.0",
     "ideogram": "^1.22.0",
     "iview": "^3.5.4",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "vue-i18n": "^8.21.1"
   },
   "devDependencies": {
     "node-sass": "^4.14.1",

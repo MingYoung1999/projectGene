@@ -1,11 +1,11 @@
 <template>
     <div>
-        <transition name="bounce">
-            <list v-if="isShowList" @onClickShowDetail="onClickShowDetail"/>
-        </transition>
-        <transition name="detail">
-            <detail v-if="isShowDetail" :data="detailData" @onClickBack="onClickBack"/>
-        </transition>
+      <transition name="bounce">
+        <list v-if="isShowList" @onClickShowDetail="onClickShowDetail"/>
+      </transition>
+      <transition name="detail">
+        <detail v-if="isShowDetail" :ID="ID" @onClickBack="onClickBack"/>
+      </transition>
     </div>
 </template>
 
@@ -21,18 +21,18 @@ export default {
     data(){
         return{
             data: [],
-            detailData: {},
+            ID: {},
             isShowList: true,
             isShowDetail: false,
         };
     },
     methods:{
-        onClickShowDetail(row) {
-            this.detailData = row;
-            this.isShowList = false;
-            setTimeout(() => {
-                this.isShowDetail = true;
-            }, 1)
+        onClickShowDetail(ID) {
+          this.ID = ID;
+          this.isShowList = false;
+          setTimeout(() => {
+              this.isShowDetail = true;
+          }, 1)
         },
         onClickBack() {
             this.isShowDetail = false;

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import iTable from '@/components/iTable';
 import iSearch from '@/components/iSearch';
 import { mapGetters, mapActions } from "vuex";
@@ -21,18 +22,19 @@ export default {
     },
     data() {
         return{
+            patientLsit: [],
             searchResultData: [],
             searchContext: '',
             columns: [
                 {
                     title: 'ID',
-                    key: 'ID',
+                    key: 'patient_ID',
                     align: 'center',
                     sotrable: false,
                 },
                 {
                     title: 'Name',
-                    key: 'Name',
+                    key: 'last_name',
                     align: 'center',
                     sotrable: false,
                 },
@@ -43,7 +45,7 @@ export default {
                     render:(h, params) => {
                         let arr = [];
                         let row = params.row;
-                        if(row.Gender === 'male'){
+                        if(row.gender === 'man'){
                             arr.push(
                                 h(
                                     "Icon",
@@ -57,7 +59,7 @@ export default {
                                 )
                             );
                         }
-                        else if(row.Gender === 'female'){
+                        else if(row.gender === 'woman'){
                             arr.push(
                                 h(
                                     "Icon",
@@ -91,7 +93,7 @@ export default {
                                     },
                                     on: {
                                         click:()=>{
-                                            this.onClickShowDetail(row);
+                                            this.onClickShowDetail(row.patient_ID);
                                         }
                                     },
                                 },
@@ -106,15 +108,15 @@ export default {
     },
     methods: {
         setSearchResaultData() {
-            this.searchResultData = this.paData.filter(
+            this.searchResultData = this.patientLsit.filter(
                 (data)=>
                     !this.searchContext ||
                     (data.ID != undefined ? data.ID.toString().includes(this.searchContext.toString()):"")||
                     (data.Name != undefined ? data.Name.toLowerCase().includes(this.searchContext.toLowerCase()):"")
             );
         },
-        onClickShowDetail(row) {
-            this.$emit("onClickShowDetail", row)
+        onClickShowDetail(ID) {
+            this.$emit("onClickShowDetail", ID)
         },
         onSearchKeyup(val){
             this.searchContext = val;
@@ -122,15 +124,23 @@ export default {
         },
     },
     computed: {
-        ...mapGetters("modules/main/", ["paData"]),
+        // ...mapGetters("modules/main/", ["paData"]),
     },
     watch: {
-        paData() {
+        // paData() {
+        //     this.setSearchResaultData();
+        // },
+        patientLsit(){
             this.setSearchResaultData();
         },
     },
     mounted() {
-        this.setSearchResaultData();
+        axios
+        .get('https://geneherokudb.herokuapp.com/patientAPI/')
+        .then(response => (this.patientLsit = response.data))
+        .catch(function (error) { // 请求失败处理
+            console.log(error);
+        });
     },
 }
 </script>
