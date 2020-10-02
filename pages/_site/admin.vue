@@ -4,14 +4,14 @@
         <list v-if="isShowList" @onClickShowDetail="onClickShowDetail"/>
       </transition>
       <transition name="detail">
-        <detail v-if="isShowDetail" :ID="ID" :patientData="patientData" @onClickBack="onClickBack"/>
+        <detail v-if="isShowDetail" :ID="ID" @onClickBack="onClickBack"/>
       </transition>
     </div>
 </template>
 
 <script>
-import detail from '@/components/main/detail';
-import list from '@/components/main/list';
+import detail from '@/components/admin/detail';
+import list from '@/components/admin/list';
 export default {
     layout: "main",
     components: {
@@ -20,16 +20,15 @@ export default {
     },
     data(){
         return{
-            patientData: {},
-            ID: "",
+            data: [],
+            ID: {},
             isShowList: true,
             isShowDetail: false,
         };
     },
     methods:{
-        onClickShowDetail(row) {
-          this.patientData = row;
-          this.ID = row.patient_ID;
+        onClickShowDetail(ID) {
+          this.ID = ID;
           this.isShowList = false;
           setTimeout(() => {
               this.isShowDetail = true;

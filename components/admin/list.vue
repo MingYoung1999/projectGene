@@ -2,7 +2,7 @@
     <div>
         <Row>
             <iSearch style="float:left" @onKeyup="onSearchKeyup"/>
-            <Button type="success" to="/:site/admin" style="margin-left: 20px">管理員</Button>
+            <Button type="success" to="/:site/admin" style="margin-left: 20px">切換</Button>
         </Row>
         <iTable
             :data="searchResultData"

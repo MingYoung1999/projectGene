@@ -28,9 +28,9 @@
 
 <script>
 import axios from 'axios';
-import personalInfo from '@/components/main/personalInfo';
-import gene from '@/components/main/gene';
-import record from '@/components/main/record';
+import personalInfo from '@/components/admin/personalInfo';
+import gene from '@/components/admin/gene';
+import record from '@/components/admin/record';
 export default {
     components: {
         gene,
