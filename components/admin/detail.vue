@@ -12,11 +12,11 @@
                     @click="onClickBack">返回</Button>
             </Row>
             <Tabs>
-                <TabPane label="基因分析結果">
-                    <gene :data="data"/>
-                </TabPane>
                 <TabPane label="個人資料">
-                    <personalInfo/>
+                    <personalInfo :ID="ID"/>
+                </TabPane>
+                <TabPane label="基因分析結果">
+                    <gene :ID="ID"/>
                 </TabPane>
                 <TabPane label="用藥紀錄">
                     <record :ID="ID"/>
@@ -38,11 +38,6 @@ export default {
         personalInfo,
     },
     props: {
-        patientData: {
-            type: Object,
-            required: true,
-            default: () => { return {} },
-        },
         ID: {
             type: Number,
             required: true,
@@ -51,7 +46,7 @@ export default {
     data(){
         return{
             data: [],
-            loading: true,
+            loading: false,
         }
     },
     methods: {
@@ -59,25 +54,7 @@ export default {
             this.$emit('onClickBack');
         },
     },
-    mounted(){
-        axios({
-            method: "get",
-            url: "https://geneherokudb.herokuapp.com/Airtable/getMatchRecords",
-            headers: {
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE2MzkwNzMsImV4cCI6MTYwMTg5ODI3M30.zm7i6Q8tUKsezLhWPDaV_oB50JMobiVghCCQK6AUlE0",
-                "Content-Type": "application/json",
-            },
-            params: {
-                compare_table: "premature_mutation",
-                patient_ID: this.ID,
-            }
-        })
-        .then(response => (this.data = response.data))
-        .catch(function (error) { // 请求失败处理
-            console.log(error);
-        })
-        .then(()=>{this.loading = false})
-    },
+    mounted(){},
 }
 </script>
 

@@ -2,7 +2,9 @@
     <div>
         <iTable
             :columns="columns"
-            :data="medData"/>
+            :data="medData"
+            :total="medData.length"
+            :showTotal="true"/>
     </div>
 </template>
 
@@ -24,7 +26,7 @@ export default {
         ID: {
             type: Number,
             required: true,
-        }
+        },
     },
     data(){
         return{
@@ -36,6 +38,7 @@ export default {
                     title: '日期',
                     align: 'center',
                     sortable: true,
+                    sortType: "desc",
                     key: 'medical_date',
                 },
                 {

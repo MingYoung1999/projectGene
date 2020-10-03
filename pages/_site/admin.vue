@@ -20,15 +20,16 @@ export default {
     },
     data(){
         return{
-            data: [],
-            ID: {},
+            patientData: {},
+            ID: "",
             isShowList: true,
             isShowDetail: false,
         };
     },
     methods:{
-        onClickShowDetail(ID) {
-          this.ID = ID;
+        onClickShowDetail(row) {
+          this.patientData = row;
+          this.ID = row.patient_ID;
           this.isShowList = false;
           setTimeout(() => {
               this.isShowDetail = true;

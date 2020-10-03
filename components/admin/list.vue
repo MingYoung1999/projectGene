@@ -2,11 +2,15 @@
     <div>
         <Row>
             <iSearch style="float:left" @onKeyup="onSearchKeyup"/>
-            <Button type="success" to="/:site/admin" style="margin-left: 20px">切換</Button>
+            <Button type="success" to="/:site/main" style="margin-left: 20px">切換</Button>
+            <Button type="success" style="margin-left: 20px">病人資料庫</Button>
+            <Button type="success" style="margin-left: 20px">使用者管理</Button>
         </Row>
         <iTable
             :data="searchResultData"
             :columns="columns"
+            :showTotal="true"
+            :total="searchResultData.length"
         />
     </div>
 </template>
@@ -46,7 +50,7 @@ export default {
                     render:(h, params) => {
                         let arr = [];
                         let row = params.row;
-                        if(row.gender === 'man'){
+                        if(row.gender === 'male'){
                             arr.push(
                                 h(
                                     "Icon",
@@ -60,7 +64,7 @@ export default {
                                 )
                             );
                         }
-                        else if(row.gender === 'woman'){
+                        else if(row.gender === 'female'){
                             arr.push(
                                 h(
                                     "Icon",
@@ -89,7 +93,7 @@ export default {
                                 "Button",
                                 {
                                     props: {
-                                        type: "error",
+                                        type: "warning",
                                         size: "small",
                                     },
                                     on: {
@@ -99,6 +103,33 @@ export default {
                                     },
                                 },
                                 "詳細資料"
+                            )
+                        )
+                        return h("div", arr);
+                    },
+                },
+                {
+                    title: " ",
+                    align: 'center',
+                    sotrable: false,
+                    render:(h, params) => {
+                        let arr = [];
+                        let row = params.row;
+                        arr.push(
+                            h(
+                                "Button",
+                                {
+                                    props: {
+                                        type: "error",
+                                        size: "small",
+                                    },
+                                    on: {
+                                        click:()=>{
+                                            this.onClickDelete(row);
+                                        }
+                                    },
+                                },
+                                "刪除病人"
                             )
                         )
                         return h("div", arr);
@@ -122,6 +153,34 @@ export default {
         onSearchKeyup(val){
             this.searchContext = val;
             this.setSearchResaultData();
+        },
+        onClickDelete(val){
+            axios({
+                method: "delete",
+                url: "https://geneherokudb.herokuapp.com/patientAPI/detail/",
+                headers: {
+                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Content-Type": "application/json",
+                },
+                data: {
+                    patient_ID: val.patient_ID,
+                }
+            })
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                })
+                .then(() => {
+                    axios.get('https://geneherokudb.herokuapp.com/patientAPI/',
+                        {
+                            headers:{
+                                'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE2Mzc1ODMsImV4cCI6MTYwMTg5Njc4M30.MWEYnQ9mySyFuYrqD4z5786DrCRgEtv8EZTvPtGYPwY"
+                            },
+                        }
+                    ).then(response => (this.patientLsit = response.data))
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+                })
         },
     },
     computed: {

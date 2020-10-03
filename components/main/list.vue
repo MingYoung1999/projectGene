@@ -7,6 +7,8 @@
         <iTable
             :data="searchResultData"
             :columns="columns"
+            :showTotal="true"
+            :total="searchResultData.length"
         />
     </div>
 </template>
@@ -46,7 +48,7 @@ export default {
                     render:(h, params) => {
                         let arr = [];
                         let row = params.row;
-                        if(row.gender === 'man'){
+                        if(row.gender === 'male'){
                             arr.push(
                                 h(
                                     "Icon",
@@ -60,7 +62,7 @@ export default {
                                 )
                             );
                         }
-                        else if(row.gender === 'woman'){
+                        else if(row.gender === 'female'){
                             arr.push(
                                 h(
                                     "Icon",

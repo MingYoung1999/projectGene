@@ -68,7 +68,7 @@ export default {
 }
 .layout-header{
     margin: 0;
-    padding: 0% 4% 2% 4%;
+    padding: 0% 4% 1% 4%;
     background: #fff;
 }
 .layout-body{
@@ -76,7 +76,7 @@ export default {
     overflow-y:auto;
     padding:1%;
     background: #fff;
-    margin: 2% 1.5% 0% 1.5%;
+    margin: 1% 1.5% 0% 1.5%;
 }
 .layout-footer{
     margin:0;
