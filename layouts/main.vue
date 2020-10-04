@@ -76,7 +76,7 @@ export default {
     overflow-y:auto;
     padding:1%;
     background: #fff;
-    margin: 1% 1.5% 0% 1.5%;
+    margin: 1% 1.5% 0.74% 1.5%;
 }
 .layout-footer{
     margin:0;

@@ -3,12 +3,23 @@
 </template>
 
 <script>
-
+import { mapGetters } from "vuex";
 export default {
   layout: "main",
   mounted(){
-    this.$router.push('/:site/main');
+    if(this.auth === "staff")
+      this.$router.push('/:site/main');
+    else if(this.auth === "admin")
+      this.$router.push('/:site/admin');
+    else if(this.auth === "viewer")
+      this.$router.push('/:site/viewer');
+    else
+      this.$router.push('/login');
+    console.log(this.auth)
   },
+  computed:{
+    ...mapGetters("modules/auth/", ["token", "auth"]),
+  }
 }
 </script>
 

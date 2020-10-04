@@ -10,18 +10,41 @@
                     <Input type="password" v-model="loginForm.Password" placeholder="Password" size="large" prefix="ios-lock"/>
                 </FormItem>
             </Form>
-            <Button type="primary" size="large" long :loading="loading" @click="onClickLogin('loginForm')">Login</Button>
+            <Button type="primary" size="large" long @click="onClickLogin">Login</Button>
         </div>
+        <iDialog
+            :visible.sync="isShowDialog"
+            title="Error"
+            :content="errorMsg"
+            :closable="false"
+            :maskClosable="false"
+            :cancelbtn="false"
+            :contentConfirmBtn="true"
+            :footerHide="true"
+            :icon="true"
+            icontype="error"
+            :width="360"
+            @onClickConfirm="onClickError"
+        />
     </div>
 </template>
 <script>
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import iDialog from '@/components/iDialog';
+import { mapGetters, mapActions } from "vuex";
 export default {
     layout: "main",
+    components: {
+        iDialog,
+    },
     data () {
         return {
+            isShowDialog: false,
             isShowLoginForm: false,
             isLoginInfo: false,
             loading: false,
+            errorMsg: "",
             loginForm: {
                 Account: '',
                 Password: '',
@@ -36,12 +59,57 @@ export default {
             },
         }
     },
+    methods:{
+        ...mapActions("modules/auth/", ["setToken","setAuth"]),
+        onClickLogin(){
+            this.$refs.loginForm.validate((valid) => {
+                if(valid){
+                    try{
+                        axios({
+                            method: "post",
+                            url: "https://geneherokudb.herokuapp.com/login/",
+                            header: { "Content-Type": "application/json" },
+                            data:{
+                                email: this.loginForm.Account,
+                                password: this.loginForm.Password,
+                            },
+                        }).then((response) => {
+                            if(response.data.token) { 
+                                this.setToken(response.data.token)
+                                if(jwt_decode(response.data.token).admin){
+                                    this.setAuth("admin");
+                                }
+                                else if(jwt_decode(response.data.token).staff){
+                                    this.setAuth("staff");
+                                }
+                                else {
+                                    this.setAuth("viewer");
+                                }
+                                this.$router.push('/');
+                            } else {
+                                this.errorMsg = response.data.erro;
+                                this.isShowDialog = true;
+                            }
+                        })
+                    }
+                    catch(error){
+                        console.log(error);
+                    }
+                } else{
+                    this.$Message.error("錯誤請修正");
+                }
+            })
+        },
+        onClickError(){
+            this.isShowDialog = false;
+            this.errorMsg = "";
+        }
+    },
     mounted() {
         setTimeout(() => {
             this.isShowLoginForm = true
         }, 200);
     },
-    methods: {}
 }
 </script>
 <style scoped>

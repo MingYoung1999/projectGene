@@ -4,15 +4,17 @@
         <p>早產相對風險比為：{{totalRisk}}</p>
     </div>
     <div v-else>
-        <Button type="success" @click="onClickGene">按拉幹</Button>
+        <Button type="success" @click="onClickGene">開始分析</Button>
     </div>
     <div id="ideo-container"></div>
     <div v-if="isShowTotalRisk">
+        <h1 style="margin: 0 0 2px 2%">Match</h1>
         <iTable
             :data="match"
             :columns="matchColumns"
             :showTotal="true"
             :total="match.length"/>
+        <h1 style="margin: 0 0 2px 2%">Mismatch</h1>
         <iTable
             :data="misMatch"
             :columns="misMatchColumns"
@@ -28,6 +30,7 @@ var roundDecimal = function (val, precision) {
 }
 import iTable from '@/components/iTable';
 import axios from 'axios';
+import { mapGetters } from "vuex";
 import * as d3 from 'd3';
 export default {
     components: {
@@ -145,7 +148,7 @@ export default {
                 method: "get",
                 url: "https://geneherokudb.herokuapp.com/Airtable/getMatchRecords",
                 headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Authorization": this.token,
                     "Content-Type": "application/json",
                 },
                 params: {
@@ -207,14 +210,18 @@ export default {
             });
         }
     },
+    computed:{
+        ...mapGetters("modules/auth/", ["token", "auth"]),
+    },
     mounted() {}
 }
 </script>
 
 <style scoped>
 .div_riskText{
-    font-size: 20px;
+    font-size: 25px;
     margin-left: 1%;
+    margin-bottom: 5px;
 }
 #ideo-container{
     margin-left: 1%;

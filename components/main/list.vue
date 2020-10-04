@@ -2,7 +2,6 @@
     <div>
         <Row>
             <iSearch style="float:left" @onKeyup="onSearchKeyup"/>
-            <Button type="success" to="/:site/admin" style="margin-left: 20px">管理員</Button>
         </Row>
         <iTable
             :data="searchResultData"
@@ -15,9 +14,9 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from "vuex";
 import iTable from '@/components/iTable';
 import iSearch from '@/components/iSearch';
-import { mapGetters, mapActions } from "vuex";
 export default {
     components: {
         iTable,
@@ -36,7 +35,13 @@ export default {
                     sotrable: false,
                 },
                 {
-                    title: 'Name',
+                    title: 'First Name',
+                    key: 'first_name',
+                    align: 'center',
+                    sotrable: false,
+                },
+                {
+                    title: 'Last Name',
                     key: 'last_name',
                     align: 'center',
                     sotrable: false,
@@ -114,8 +119,9 @@ export default {
             this.searchResultData = this.patientLsit.filter(
                 (data)=>
                     !this.searchContext ||
-                    (data.ID != undefined ? data.ID.toString().includes(this.searchContext.toString()):"")||
-                    (data.Name != undefined ? data.Name.toLowerCase().includes(this.searchContext.toLowerCase()):"")
+                    (data.patient_ID != undefined ? data.patient_ID.toString().includes(this.searchContext.toString()):"")||
+                    (data.first_name != undefined ? data.first_name.toLowerCase().includes(this.searchContext.toLowerCase()):"")||
+                    (data.last_name != undefined ? data.last_name.toLowerCase().includes(this.searchContext.toLowerCase()):"")
             );
         },
         onClickShowDetail(row) {
@@ -126,23 +132,20 @@ export default {
             this.setSearchResaultData();
         },
     },
-    computed: {
-        // ...mapGetters("modules/main/", ["paData"]),
-    },
     watch: {
-        // paData() {
-        //     this.setSearchResaultData();
-        // },
         patientLsit(){
             this.setSearchResaultData();
         },
+    },
+    computed:{
+        ...mapGetters("modules/auth/", ["token", "auth"]),
     },
     mounted() {
         axios
         .get('https://geneherokudb.herokuapp.com/patientAPI/',
             {
                 headers:{
-                    'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE2Mzc1ODMsImV4cCI6MTYwMTg5Njc4M30.MWEYnQ9mySyFuYrqD4z5786DrCRgEtv8EZTvPtGYPwY"
+                    'Authorization': this.token,
                 },
             }
         )

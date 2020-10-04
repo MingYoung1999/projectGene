@@ -25,6 +25,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from "vuex";
 import iDialogForm from '@/components/admin/personalInfo/iDialogForm'
 function customDate(dateText){
     var date = ''
@@ -60,7 +61,7 @@ export default {
                 method: "put",
                 url: "https://geneherokudb.herokuapp.com/patientAPI/detail/",
                 headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Authorization": this.token,
                     "Content-Type": "application/json",
                 },
                 data: {
@@ -78,7 +79,7 @@ export default {
                     method: "get",
                     url: "https://geneherokudb.herokuapp.com/patientAPI/detail/",
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                        "Authorization": this.token,
                         "Content-Type": "application/json",
                     },
                     params: {
@@ -93,12 +94,15 @@ export default {
             this.isShowDialogEditPersonal = false;
         },
     },
+    computed:{
+        ...mapGetters("modules/auth/", ["token", "auth"]),
+    },
     mounted(){
         axios({
             method: "get",
             url: "https://geneherokudb.herokuapp.com/patientAPI/detail/",
             headers: {
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                "Authorization": this.token,
                 "Content-Type": "application/json",
             },
             params: {

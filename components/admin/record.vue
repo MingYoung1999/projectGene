@@ -20,6 +20,7 @@
 
 <script>
 import axios from 'axios';
+import { mapGetters } from "vuex";
 import cloneDeep from "lodash/cloneDeep";
 import iTable from '@/components/iTable';
 import iDialogFormEdit from '@/components/admin/record/iDialogFormEdit';
@@ -145,7 +146,7 @@ export default {
                 method: "delete",
                 url: "https://geneherokudb.herokuapp.com/history/detail/",
                 headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Authorization": this.token,
                     "Content-Type": "application/json",
                 },
                 data: {
@@ -158,7 +159,7 @@ export default {
                     method: "get",
                     url: "https://geneherokudb.herokuapp.com/history/",
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                        "Authorization": this.token,
                         "Content-Type": "application/json",
                     },
                     params: {
@@ -189,7 +190,7 @@ export default {
                 method: "put",
                 url: "https://geneherokudb.herokuapp.com/history/detail/",
                 headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Authorization": this.token,
                     "Content-Type": "application/json",
                 },
                 data: {
@@ -207,7 +208,7 @@ export default {
                     method: "get",
                     url: "https://geneherokudb.herokuapp.com/history/",
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                        "Authorization": this.token,
                         "Content-Type": "application/json",
                     },
                     params: {
@@ -233,12 +234,11 @@ export default {
             this.isShowDialogFormPost = false;
         },
         onClickConfirmPost(val){
-            console.log(val);
             axios({
                 method: "post",
                 url: "https://geneherokudb.herokuapp.com/history/detail/",
                 headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                    "Authorization": this.token,
                     "Content-Type": "application/json",
                 },
                 data: {
@@ -256,7 +256,7 @@ export default {
                     method: "get",
                     url: "https://geneherokudb.herokuapp.com/history/",
                     headers: {
-                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE3MTM5NzAsImV4cCI6MTYwMTk3MzE3MH0.74SZSuJYHhoh1-ip-IVS8EIS5E6pRl5S2N8cFutL3Kk",
+                        "Authorization": this.token,
                         "Content-Type": "application/json",
                     },
                     params: {
@@ -276,12 +276,15 @@ export default {
             this.isShowDialogFormPost = false;
         },
     },
+    computed:{
+        ...mapGetters("modules/auth/", ["token", "auth"]),
+    },
     mounted(){
         axios({
             method: "get",
             url: "https://geneherokudb.herokuapp.com/history/",
             headers: {
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjgyLCJhZG1pbiI6dHJ1ZSwic3RhZmYiOmZhbHNlLCJpYXQiOjE2MDE2MzkwNzMsImV4cCI6MTYwMTg5ODI3M30.zm7i6Q8tUKsezLhWPDaV_oB50JMobiVghCCQK6AUlE0",
+                "Authorization": this.token,
                 "Content-Type": "application/json",
             },
             params: {

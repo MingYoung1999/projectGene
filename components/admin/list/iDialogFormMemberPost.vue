@@ -1,30 +1,27 @@
 <template>
     <Modal
         v-model="show"
-        title="新增用藥紀錄"
-        width="450"
+        title="新增使用者"
+        width="500"
         :footer-hide="true"
-        @on-cancel="onClickCancelEdit">
+        @on-cancel="onClickCancelMemberPost">
             <Form :model="formData" ref="formData" :rules="formRules">
-                <FormItem label="日期" prop="medical_date" :label-width="75">
-                    <Input v-model.trim="formData.medical_date"/>
+                <FormItem label="Username" prop="username" :label-width="100">
+                    <Input v-model.trim="formData.username"/>
                 </FormItem>
-                <FormItem label="醫院別" prop="hospital" :label-width="75">
-                    <Input v-model.trim="formData.hospital"/>
+                <FormItem label="Email" prop="email" :label-width="100">
+                    <Input v-model.trim="formData.email" type="email"/>
                 </FormItem>
-                <FormItem label="藥名" prop="medical_name" :label-width="75">
-                    <Input v-model.trim="formData.medical_name"/>
+                <FormItem label="Password" prop="password" :label-width="100">
+                    <Input v-model.trim="formData.password" type="password"/>
                 </FormItem>
-                <FormItem label="用法" prop="medical_instructions" :label-width="75">
-                    <Input v-model.trim="formData.medical_instructions"/>
-                </FormItem>
-                <FormItem label="備註" prop="medical_description" :label-width="75">
-                    <Input v-model.trim="formData.medical_description"/>
+                <FormItem label="Phone" prop="phone" :label-width="100">
+                    <Input v-model.trim="formData.phone"/>
                 </FormItem>
             </Form>
             <div class="UpdateDialogFooter">
-                <Button @click="onClickCancelPost" size="large">取消</Button>
-                <Button @click="onClickConfirmPost" size="large" type="primary" style="margin-left:20px;">確定</Button>
+                <Button @click="onClickCancelMemberPost" size="large">取消</Button>
+                <Button @click="onClickConfirmMemberPost" size="large" type="primary" style="margin-left:20px;">確定</Button>
             </div>
     </Modal>
 </template>
@@ -41,29 +38,23 @@ export default {
         return{
             show: false,
             formData: {
-                medical_date: "",
-                hospital: "",
-                medical_name: "",
-                medical_instructions: "",
-                medical_description: "",
+                username: "",
+                password: "",
+                email: "",
+                phone: "",
             },
             formRules: {
-                medical_date:[{
+                username:[{
                     required: true,
                     trigger: 'blur',
                     message: "不能為空",
                 }],
-                hospital:[{
+                password:[{
                     required: true,
                     trigger: 'blur',
                     message: "不能為空",
                 }],
-                medical_name:[{
-                    required: true,
-                    trigger: 'blur',
-                    message: "不能為空",
-                }],
-                medical_instructions:[{
+                email:[{
                     required: true,
                     trigger: 'blur',
                     message: "不能為空",
@@ -73,15 +64,17 @@ export default {
     },
     watch: {
         visible: function () {
-            this.$refs.formData.resetFields();
+            if(this.visible){
+                this.$refs.formData.resetFields();
+            };
             this.show = this.visible;
         },
     },
     methods: {
-        onClickCancelPost(){
+        onClickCancelMemberPost(){
             this.$emit("onClickCancel");
         },
-        onClickConfirmPost(){
+        onClickConfirmMemberPost(){
             this.$refs.formData.validate((valid) => {
                 if(valid){
                     this.$emit("onClickConfirm", this.formData);

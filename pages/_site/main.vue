@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import detail from '@/components/main/detail';
 import list from '@/components/main/list';
 export default {
@@ -41,6 +42,14 @@ export default {
                 this.isShowList = true;
             }, 1)
         },
+    },
+    computed:{
+        ...mapGetters("modules/auth/", ["token", "auth"]),
+    },
+    mounted(){
+      if(this.auth !== "staff"){
+        this.$router.push('/');
+      }
     },
 }
 </script>
