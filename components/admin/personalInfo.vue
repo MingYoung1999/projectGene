@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div class="dev_text">
-            <Button size="large" @click="onClickEditPersonal"><Icon type="md-build"/> 編輯</Button>
-        </div>
+        <Row>
+            <Button size="large" type="success" @click="onClickEditPersonal" class="dev_text"><Icon type="md-build"/> 編輯</Button>
+            <Button size="large" type="success" @click="onClickUpload" class="dev_text"><Icon type="ios-cloud-upload"/> 上傳檔案</Button>
+        </Row>
         <div class="dev_text">
             <p>姓名：{{patientData.last_name}} ,{{patientData.first_name}}</p>
         </div>
@@ -20,6 +21,10 @@
             :visible="isShowDialogEditPersonal"
             @onClickCancel="onClickCancelEdit"
             @onClickConfirm="onClickConfirmEdit"/>
+        <iDialogUpload
+            :visible="isShowDialogUpload"
+            @onClickCancel="onClickCancelUpload"
+            @uploadFile="uploadFile"/>
     </div>
 </template>
 
@@ -27,6 +32,7 @@
 import axios from 'axios';
 import { mapGetters } from "vuex";
 import iDialogForm from '@/components/admin/personalInfo/iDialogForm'
+import iDialogUpload from '@/components/admin/personalInfo/iDialogUpload'
 function customDate(dateText){
     var date = ''
     dateText = dateText.split("T")
@@ -36,6 +42,7 @@ function customDate(dateText){
 export default {
     components:{
         iDialogForm,
+        iDialogUpload,
     },
     props:{
         ID: {
@@ -46,6 +53,7 @@ export default {
     data(){
         return{
             isShowDialogEditPersonal: false,
+            isShowDialogUpload: false,
             patientData: {},
         }
     },
@@ -92,6 +100,28 @@ export default {
                     })
             })
             this.isShowDialogEditPersonal = false;
+        },
+        onClickUpload(){
+            this.isShowDialogUpload = true;
+        },
+        onClickCancelUpload(){
+            this.isShowDialogUpload = false;
+        },
+        uploadFile(val){
+            axios({
+                method: "post",
+                url: "https://geneherokudb.herokuapp.com/Airtable",
+                headers: {
+                    "Authorization": this.token,
+                    "Content-Type": "application/json",
+                },
+                data: {
+                    table: this.ID,
+                    base: "patient",
+                    filename: val
+                },
+            })
+            this.isShowDialogUpload = false;
         },
     },
     computed:{

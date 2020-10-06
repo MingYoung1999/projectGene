@@ -507,6 +507,21 @@ export default {
         },
         onClickConfirmUpload(val){
             console.log(val);
+            axios({
+                method: "post",
+                url: "https://geneherokudb.herokuapp.com/Airtable",
+                headers: {
+                    "Authorization": this.token,
+                    "Content-Type": "application/json"
+                },
+                data:{
+                    filename: val.fileName,
+                    base: val.base,
+                    table: val.table,
+                },
+            }).catch(function (error) { // 请求失败处理
+                console.log(error);
+            })
             this.isShowDialogUpload = false;
         },
     },

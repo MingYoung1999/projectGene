@@ -15,7 +15,6 @@ export default {
       this.$router.push('/:site/viewer');
     else
       this.$router.push('/login');
-    console.log(this.auth)
   },
   computed:{
     ...mapGetters("modules/auth/", ["token", "auth"]),

@@ -4,7 +4,7 @@
         title="新增用藥紀錄"
         width="450"
         :footer-hide="true"
-        @on-cancel="onClickCancelEdit">
+        @on-cancel="onClickCancelPost">
             <Form :model="formData" ref="formData" :rules="formRules">
                 <FormItem label="日期" prop="medical_date" :label-width="75">
                     <Input v-model.trim="formData.medical_date"/>
