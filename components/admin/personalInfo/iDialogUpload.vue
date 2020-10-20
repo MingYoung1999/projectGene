@@ -6,7 +6,7 @@
         :footer-hide="true"
         @on-cancel="onClickCancelUpload">
             <Form>
-                <FormItem label="上傳檔案" prop="fileName" :label-width="75">
+                <FormItem prop="fileName">
                 <Upload 
                         type="drag"
                         accept=".csv"

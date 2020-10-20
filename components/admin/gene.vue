@@ -144,7 +144,8 @@ export default {
     },
     methods:{
         onClickGene(){
-            axios({
+            let ax = axios.create({timeout:60000});
+            ax({
                 method: "get",
                 url: "https://geneherokudb.herokuapp.com/Airtable/getMatchRecords",
                 headers: {
